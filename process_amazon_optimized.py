@@ -1,10 +1,6 @@
 import pandas as pd
 import time
-import os
-import re
 import getpass
-from datetime import timedelta, datetime
-from py_console import console
 
 username = getpass.getuser()
 

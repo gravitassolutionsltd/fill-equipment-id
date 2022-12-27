@@ -13,7 +13,7 @@ check_date = file.read()
 post_date = check_date.split("\n")[1].replace("/", "-")
 file.close()
 
-name = "WEEK 51 TOLLS (2022) TRAILERS.xlsx"
+name = "WEEK 52 TOLLS (2022) POWER UNITS.xlsx"
 masterfile = "amazon_lp_masterfile_12-22-22.xlsx"
 
 # rawfiles_dir = "./raw_files/"
