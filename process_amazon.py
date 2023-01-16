@@ -1,11 +1,11 @@
 import pandas as pd
 import time
 
-name = "Missing Units.xlsx"
+file_name = "Missing Units.xlsx"
 masterfile = "amazon_lp_masterfile_1-6-23.xlsx"
 
 # rawfiles_dir = "./raw_files/"
-final_df = pd.read_excel(f"./raw_files/{name}")
+final_df = pd.read_excel(f"./raw_files/{file_name}")
 
 lp_updated_mf = pd.read_excel(f"./master_files/{masterfile}",dtype=str)
 lp_updated_mf_LP = pd.DataFrame(lp_updated_mf, columns=["LicenseplateID"])
@@ -37,6 +37,10 @@ for group_name, group_df in grouped_df:
             value = lp_updated_mf[lp_updated_mf['License plate ID'].astype(str).str.contains(lp)]["Equipment ID"].iloc[0]
         if len(lp_updated_mf[lp_updated_mf["Transp. #"].astype(str).str.contains(str(lp))]) > 0 and value_not_okay(value):
             value = lp_updated_mf[lp_updated_mf["Transp. #"].astype(str).str.contains(str(lp))]["Equipment ID"].iloc[0]
+        if len(lp_updated_mf[lp_updated_mf['License plate ID'].astype(str).str.contains(lp)]) > 0 and value_not_okay(value):
+            value = lp_updated_mf[lp_updated_mf['License plate ID'].astype(str).str.contains(lp)]["Equip ID"].iloc[0]
+        if len(lp_updated_mf[lp_updated_mf["Transp. #"].astype(str).str.contains(str(lp))]) > 0 and value_not_okay(value):
+            value = lp_updated_mf[lp_updated_mf["Transp. #"].astype(str).str.contains(str(lp))]["Equip ID"].iloc[0]
     if value_not_okay(value):   
         group_df["EquipmentID_LP_MF"] = "-"
     else:
@@ -94,7 +98,7 @@ print(f"Time Taken: {stop - start}")
 if remove_transponder_column:
     df.drop(columns=["TRANSPONDER"], inplace=True)
 # df.to_excel(f"./output_files/{name}", index=False)
-writer = pd.ExcelWriter(f"./output_files/{name}",  engine='xlsxwriter', datetime_format='m/dd/yyyy h:mm:ss AM/PM')
+writer = pd.ExcelWriter(f"./output_files/{file_name}",  engine='xlsxwriter', datetime_format='m/dd/yyyy h:mm:ss AM/PM')
 df.to_excel(writer, index=False)
 writer.save()
 
