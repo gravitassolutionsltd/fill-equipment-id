@@ -1,8 +1,8 @@
 import pandas as pd
 import time
 
-name = "WEEK 52 TOLLS (2022) AFP.xlsx"
-masterfile = "amazon_lp_masterfile_12-22-22.xlsx"
+name = "Missing Units.xlsx"
+masterfile = "amazon_lp_masterfile_1-6-23.xlsx"
 
 # rawfiles_dir = "./raw_files/"
 final_df = pd.read_excel(f"./raw_files/{name}")
@@ -28,8 +28,8 @@ grouped_df = final_df.groupby(by=["LICENSE PLATE", "TRANSPONDER"])
 df = pd.DataFrame()
 print("Processing...................")
 for group_name, group_df in grouped_df:
-    lp = group_name[0]
-    dnt = group_name[1]
+    lp = str(group_name[0])
+    dnt = str(group_name[1])
 
     value = "-"
     if lp != "-":
