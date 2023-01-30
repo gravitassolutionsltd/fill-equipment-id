@@ -1,8 +1,8 @@
 import pandas as pd
 import time
 
-file_name = "Missing Units.xlsx"
-masterfile = "amazon_lp_masterfile_1-6-23.xlsx"
+file_name = "WEEK 04 TOLLS (2023) POWER UNITS.xlsx"
+masterfile = "amazon_lp_masterfile_1-20-23 (1).xlsx"
 
 # rawfiles_dir = "./raw_files/"
 final_df = pd.read_excel(f"./raw_files/{file_name}")
@@ -34,13 +34,49 @@ for group_name, group_df in grouped_df:
     value = "-"
     if lp != "-":
         if len(lp_updated_mf[lp_updated_mf['License plate ID'].astype(str).str.contains(lp)]) > 0 and value_not_okay(value):
-            value = lp_updated_mf[lp_updated_mf['License plate ID'].astype(str).str.contains(lp)]["Equipment ID"].iloc[0]
+            master_check = lp_updated_mf[lp_updated_mf['License plate ID'].astype(str).str.contains(lp)]
+            if master_check.shape[0] > 1:
+                master_check_temp = master_check[master_check["Transponder Status"] == "Active"]
+                
+                if master_check_temp.shape[0] > 0:
+                    value = master_check_temp["Equipment ID"].iloc[0]
+                else:
+                    value = master_check["Equipment ID"].iloc[0]
+            else:
+                value = master_check["Equipment ID"].iloc[0]
         if len(lp_updated_mf[lp_updated_mf["Transp. #"].astype(str).str.contains(str(lp))]) > 0 and value_not_okay(value):
-            value = lp_updated_mf[lp_updated_mf["Transp. #"].astype(str).str.contains(str(lp))]["Equipment ID"].iloc[0]
+            master_check = lp_updated_mf[lp_updated_mf["Transp. #"].astype(str).str.contains(str(lp))]
+            if master_check.shape[0] > 1:
+                master_check_temp = master_check[master_check["Transponder Status"] == "Active"]
+                
+                if master_check_temp.shape[0] > 0:
+                    value = master_check_temp["Equipment ID"].iloc[0]
+                else:
+                    value = master_check["Equipment ID"].iloc[0]
+            else:
+                value = master_check["Equipment ID"].iloc[0]
         if len(lp_updated_mf[lp_updated_mf['License plate ID'].astype(str).str.contains(lp)]) > 0 and value_not_okay(value):
-            value = lp_updated_mf[lp_updated_mf['License plate ID'].astype(str).str.contains(lp)]["Equip ID"].iloc[0]
+            master_check = lp_updated_mf[lp_updated_mf['License plate ID'].astype(str).str.contains(lp)]
+            if master_check.shape[0] > 1:
+                master_check_temp = master_check[master_check["Transponder Status"] == "Active"]
+                
+                if master_check_temp.shape[0] > 0:
+                    value = master_check_temp["Equip ID"].iloc[0]
+                else:
+                    value = master_check["Equip ID"].iloc[0]
+            else:
+                value = master_check["Equip ID"].iloc[0]
         if len(lp_updated_mf[lp_updated_mf["Transp. #"].astype(str).str.contains(str(lp))]) > 0 and value_not_okay(value):
-            value = lp_updated_mf[lp_updated_mf["Transp. #"].astype(str).str.contains(str(lp))]["Equip ID"].iloc[0]
+            master_check = lp_updated_mf[lp_updated_mf["Transp. #"].astype(str).str.contains(str(lp))]
+            if master_check.shape[0] > 1:
+                master_check_temp = master_check[master_check["Transponder Status"] == "Active"]
+                
+                if master_check_temp.shape[0] > 0:
+                    value = master_check_temp["Equip ID"].iloc[0]
+                else:
+                    value = master_check["Equip ID"].iloc[0]
+            else:
+                value = master_check["Equip ID"].iloc[0]
     if value_not_okay(value):   
         group_df["EquipmentID_LP_MF"] = "-"
     else:
